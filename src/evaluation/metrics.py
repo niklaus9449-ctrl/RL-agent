@@ -1,10 +1,10 @@
 def victims_found(env):
     return getattr(env.drone, "found_victims", 0)
-
-
 def steps_taken(env):
     return getattr(env, "steps", 0)
 
+def steps_taken(env):
+    return getattr(env, "steps", 0)
 
 def exploration_efficiency(env):
     # assumes env.grid.visited is a 2D array of 0/1
