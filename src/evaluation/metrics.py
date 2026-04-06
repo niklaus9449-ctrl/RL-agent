@@ -1,5 +1,7 @@
 def victims_found(env):
     return getattr(env.drone, "found_victims", 0)
+def steps_taken(env):
+    return getattr(env, "steps", 0)
 
 def steps_taken(env):
     return getattr(env, "steps", 0)
