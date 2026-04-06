@@ -22,6 +22,11 @@ class DroneEnv:
         self.steps = 0
         self.victims_remaining = 0
 
+
+    def encode_state(self):
+      x, y = self.drone_pos
+      return x * self.width + y
+
     # ---------------------------
     # Reset Environment
     # ---------------------------
@@ -92,17 +97,13 @@ class DroneEnv:
     # Get state
     # ---------------------------
     def _get_state(self):
-
-        return {
-            "drone_position": self.drone_pos,
-            "grid": self.grid.grid
-        }
+        return self.encode_state()
 
     # ---------------------------
     # Render (debugging)
     # ---------------------------
     def render(self):
-      
+
         symbols = {
             0: ".",
             1: "D",
