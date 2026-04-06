@@ -1,2 +1,4 @@
 numpy
 evaluation
+stable-baselines3
+openenv
