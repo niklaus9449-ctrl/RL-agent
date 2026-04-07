@@ -6,7 +6,7 @@ from src.evaluation.metrics import (
 )
 
 from src.env.drone_env import DroneEnv
-from src.agents.dqn_agent import DQNAgent
+from src.agents.q_agent import DQNAgent
 # from src.agents.ppo_agent import PPOAgent
 
 

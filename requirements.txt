@@ -2,3 +2,6 @@ numpy
 evaluation
 stable-baselines3
 openenv
+gymnasium>=0.29.0
+numpy>=1.24.0
+torch>=2.0.0

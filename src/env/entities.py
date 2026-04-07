@@ -1,63 +1,68 @@
 """
-Entities used inside the Drone Search & Rescue environment.
-These are simple data containers. The environment controls behavior.
+entities.py — Typed data containers for the Drone S&R environment.
+Pure data classes; all movement/collision logic lives in DroneEnv.
 """
 
-from dataclasses import dataclass
-# ---------- Base Entity ----------
+from __future__ import annotations
+from dataclasses import dataclass, field
+
+
+# ---------------------------------------------------------------------------
+# Base
+# ---------------------------------------------------------------------------
 
 @dataclass
 class Entity:
     x: int
     y: int
 
-# ---------- Drone Entity ----------
+    @property
+    def pos(self) -> tuple[int, int]:
+        return (self.x, self.y)
 
+
+# ---------------------------------------------------------------------------
+# Drone
+# ---------------------------------------------------------------------------
+
+@dataclass
 class Drone(Entity):
-    """
-    Drone used to explore the grid.
-    The environment controls movement logic.
-    """
+    battery: int = 100
+    rescues: int = 0
 
-    def __init__(self, x: int, y: int, battery_life: int = 100):
-        super().__init__(x, y)
-        self.battery_life = battery_life
+    def consume(self) -> None:
+        """Drain one battery unit per step."""
+        if self.battery <= 0:
+            raise RuntimeError("Drone battery is depleted — episode should have ended.")
+        self.battery -= 1
 
-    def move(self, dx: int, dy: int):
-        """Update drone position (environment validates movement)."""
-        if self.battery_life <= 0:
-            raise RuntimeError("Drone battery depleted")
+    @property
+    def is_alive(self) -> bool:
+        return self.battery > 0
 
-        self.x += dx
-        self.y += dy
-        self.battery_life -= 1
 
-# ---------- Victim Entity ----------
+# ---------------------------------------------------------------------------
+# Victim
+# ---------------------------------------------------------------------------
 
+@dataclass
 class Victim(Entity):
-    """
-    Victim located somewhere in the grid.
-    """
+    health: int   = 100
+    rescued: bool = False
 
-    def __init__(self, x: int, y: int, health: int = 100):
-        super().__init__(x, y)
-        self.health = health
-        self.rescued = False
-
-    def rescue(self):
-        """Mark victim as rescued."""
+    def rescue(self) -> None:
         self.rescued = True
 
+    @property
     def is_rescued(self) -> bool:
         return self.rescued
 
 
-# ---------- Obstacle Entity (optional but useful later) ----------
+# ---------------------------------------------------------------------------
+# Obstacle
+# ---------------------------------------------------------------------------
 
+@dataclass
 class Obstacle(Entity):
-    """
-    Represents blocked cells in the grid.
-    """
-
-    def __init__(self, x: int, y: int):
-        super().__init__(x, y)
+    """Impassable static cell."""
+    pass

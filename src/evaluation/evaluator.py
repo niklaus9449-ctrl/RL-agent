@@ -1,3 +1,4 @@
+# evaluator.py - Evaluates an agent on a set of metrics over multiple episodes.
 import numpy as np
 class Evaluator:
     def __init__(self, env_fn, metrics, n_episodes=5):

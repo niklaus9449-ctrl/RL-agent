@@ -1,3 +1,4 @@
+# metrics.py - Defines evaluation metrics for the drone environment.
 def victims_found(env):
     return getattr(env.drone, "found_victims", 0)
 def steps_taken(env):
